@@ -8,15 +8,18 @@ const routes: Array<RouteConfig> = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
+    meta: {
+      trn: true
+    }
   },
   {
     path: '/about',
     name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+    component: () => import('../views/About.vue'),
+    meta: {
+      authorized: true
+    }
   }
 ]
 
@@ -24,6 +27,13 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+router.beforeEach(async (to, from, next) => {
+  const token = Vue.cookies.get('Authorization')
+  if (to.meta?.authorized && token) {
+    return next('/')
+  }
+  return next()
 })
 
 export default router
