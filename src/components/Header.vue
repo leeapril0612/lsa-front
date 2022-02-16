@@ -9,6 +9,7 @@
       <router-link to="/" active-class="active" exact>Home</router-link> |
       <router-link to="/about" active-class="active">Board</router-link> |
       <router-link to="/login" active-class="active">Login</router-link>
+      <!-- <span>Admin 님 환영합니다</span> -->
     </div>
   </header>
 </template>
@@ -31,11 +32,11 @@ export default Vue.extend({
       return !this.$route.meta?.trn
     }
   },
-  mounted: function (): void {
+  mounted () {
     console.log(this.$route)
   },
   watch: {
-    $route: function () {
+    $route () {
       console.log(this.$route)
     }
   }
@@ -57,16 +58,18 @@ export default Vue.extend({
   }
   header.main {
     background: #000;
+    position: relative;
   }
   header .logo {
     font-size: 1.3em;
     font-weight: bold;
   }
 
-  header .nav a {
+  header .nav a , span {
     font-weight: bold;
     text-decoration: none;
     color: #fff;
+    margin: 0 15px;
   }
 
   header .nav a.active {

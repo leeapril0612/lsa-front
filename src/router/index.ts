@@ -20,6 +20,11 @@ const routes: Array<RouteConfig> = [
     meta: {
       authorized: true
     }
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('../views/login/Login.vue')
   }
 ]
 
