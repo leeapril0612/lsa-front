@@ -30,7 +30,7 @@ const router = new VueRouter({
 })
 router.beforeEach(async (to, from, next) => {
   const token = Vue.cookies.get('Authorization')
-  if (to.meta?.authorized && token) {
+  if (to.meta?.authorized && !token) {
     return next('/')
   }
   return next()
