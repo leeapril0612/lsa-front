@@ -45,7 +45,7 @@ export default Vue.extend({
     border-radius: 10px;
     backdrop-filter: blur(10px);
     border: 2px solid rgba(255,255,255,0.1);
-    box-shadow: 0 0 40px rgb(8 7 16 / 60%);
+    box-shadow: 0 0 100px rgb(8 7 16 / 30%);
     padding: 50px 35px;
   }
 

@@ -44,7 +44,8 @@ export default {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: url('./assets/bg.jpg');
+    // background-image: url('./assets/bg.jpg');
+    background: linear-gradient(45deg, #FC466B, #3F5EFB);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

@@ -1,9 +1,9 @@
 <template>
   <header v-bind:class="{
-    main: headerClass
+    main: false
   }">
     <div class="logo">
-      WeB
+      <!-- WeB -->
     </div>
     <div class="nav">
       <router-link to="/" active-class="active" exact>Home</router-link> |
@@ -70,9 +70,24 @@ export default Vue.extend({
     text-decoration: none;
     color: #fff;
     margin: 0 15px;
+    padding: 5px 0px;
+    position: relative;
+    overflow: hidden;
   }
 
-  header .nav a.active {
-    color: #fbc22b;
+  header .nav a::before {
+    content: '';
+    position: absolute;
+    background: #fff;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    transition: 0.3s;
+  }
+  header .nav a:hover::before {
+    width: 100%;
+  }
+  header .nav a.active::before {
+    width: 100%;
   }
 </style>
