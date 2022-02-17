@@ -1,4 +1,4 @@
-FROM node as build-stage
+FROM node:lts-alpine as build-stage
 WORKDIR /app
 ADD . .
 RUN npm i
