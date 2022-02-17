@@ -2,9 +2,6 @@
   <div id="app">
     <Header/>
     <router-view/>
-    <div id="bg">
-      <div class="cover"></div>
-    </div>
   </div>
 </template>
 
@@ -32,30 +29,17 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    overflow: hidden;
-  }
-
-  #bg {
-    z-index: -1;
-    top:0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    // background-image: url('./assets/bg.jpg');
+    // overflow: hidden;
     background: linear-gradient(45deg, #FC466B, #3F5EFB);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-color: #000;
   }
 
-  .cover {
-    width: 100%;
-    height: 100%;
-    background: #000;
-    opacity: 0.3;
+  .wrap {
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    align-items: center;
+    padding-top: 75px;
+    background: rgba(0,0,0,0.25)
   }
 </style>

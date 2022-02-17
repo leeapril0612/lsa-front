@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wrap">
      <section id="main">
       <div id="time-box">
         <div id="clock">
@@ -26,7 +26,6 @@
     width: 100%;
     position: absolute;
     display: flex;
-    height: 100vh;
     z-index: 2;
     justify-content: center;
     align-items: center;
