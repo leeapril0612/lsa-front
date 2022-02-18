@@ -21,9 +21,11 @@ export default new Vuex.Store<State>({
   mutations: {
     LOGIN (state) {
       state.login = true
+      localStorage.setItem('login', 'true')
     },
     LOGOUT (state) {
       state.login = false
+      localStorage.removeItem('login')
     },
     setProfile (state, profile: UserInfo) {
       console.log('setprofile')
@@ -37,9 +39,8 @@ export default new Vuex.Store<State>({
           username,
           password
         })
-          .then(() => {
-            commit('LOGIN')
-            this.dispatch('getUserInfo')
+          .then(async (response) => {
+            await this.dispatch('getUserInfo')
               .then((res) => resolve(res))
               .catch((err) => reject(err))
           })
@@ -53,6 +54,7 @@ export default new Vuex.Store<State>({
       return getProfile()
         .then((res) => {
           commit('setProfile', res.data)
+          commit('LOGIN')
           return res
         })
     }
