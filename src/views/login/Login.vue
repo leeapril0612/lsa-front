@@ -1,34 +1,52 @@
 <template>
   <div class="wrap">
-    <form class="login_box">
+    <form class="login_box" @submit="login">
       <h2>Login</h2>
       <label for="username">Username</label>
-      <input name="username" placeholder="Username"/>
+      <input name="username" placeholder="Username" v-model="username"/>
       <label for="password">Password</label>
-      <input name="password" placeholder="Password" type="passwordsa"/>
-      <button type="button">Log In</button>
+      <input name="password" placeholder="Password" type="password" v-model="password"/>
+      <button type="submit">Log In</button>
     </form>
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import Vue from 'vue'
 
 export default Vue.extend({
-
+  name: 'login',
+  data () {
+    return {
+      username: '',
+      password: ''
+    }
+  },
+  methods: {
+    async login (e: Event) {
+      e.preventDefault()
+      this.$store.dispatch('LOGIN', {
+        username: this.username,
+        password: this.password
+      })
+        .then(() => {
+          this.$router.push('/')
+        })
+        .catch((err) => {
+          console.error(err)
+          alert('로그인 실패')
+        })
+    }
+  },
+  computed: {
+    payload () {
+      return this.$store.state.payload
+    }
+  }
 })
 </script>
 
 <style lang="scss" scoped>
-  .wrap {
-    padding: 15px;
-    display: flex;
-    justify-content: center;
-    // background: #000;
-    height: calc(100vh - 60px);
-    align-items: center;
-  }
-
   h2{
     font-size: 2.5em;
     color: #fff;
