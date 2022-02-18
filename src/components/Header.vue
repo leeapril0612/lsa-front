@@ -27,10 +27,10 @@ export default Vue.extend({
   },
   computed: {
     isLogin () {
-      return this.$store.state.login
+      return this.$store.state.Auth.login
     },
     payload () {
-      return this.$store.state.profile || {}
+      return this.$store.state.Auth.profile || {}
     }
   }
 })
