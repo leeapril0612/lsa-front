@@ -1,18 +1,36 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+import store from '@/store'
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+
+declare interface ReponseBody {
+  code: number
+  data: any
+}
 
 export class HttpRequest {
   private instance: AxiosInstance
 
   constructor (option?: AxiosRequestConfig) {
-    this.instance = axios.create(Object.assign({
-      baseURL: 'http://localhost:3080',
+    this.instance = axios.create({
+      // baseURL: 'http://dev-sys.openobject.net:25000/',
+      baseURL: 'http://localhost:3080/',
       headers: {
+        // 'Access-Control-Allow-Origin:': '*'
       },
-      withCredentials: true
-    }, option || {}))
+      withCredentials: true,
+      ...option
+    })
+
+    this.instance.interceptors.response.use(undefined, (err) => {
+      if (err?.response.status) {
+        if (store.state.login) {
+          store.dispatch('LOGOUT')
+        }
+      }
+      return Promise.reject(err)
+    })
   }
 
-  public request (option: AxiosRequestConfig) {
-    return this.instance.request(option)
+  public request (option: AxiosRequestConfig): Promise<ReponseBody> {
+    return this.instance.request(option).then((res) => res.data)
   }
 }
