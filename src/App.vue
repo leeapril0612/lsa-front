@@ -7,10 +7,19 @@
 
 <script>
 import Header from '@/components/Header.vue'
+import store from './store'
 
 export default {
   components: {
     Header
+  },
+  created () {
+    if (this.$store.state.login) {
+      this.$store.dispatch('getProfile')
+        .catch(() => {
+          this.$store.dispatch('LOGOUT')
+        })
+    }
   }
 }
 </script>
