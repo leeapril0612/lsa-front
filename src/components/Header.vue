@@ -32,9 +32,6 @@ export default Vue.extend({
     payload () {
       return this.$store.state.profile || {}
     }
-  },
-  mounted () {
-    console.log(this.$route)
   }
 })
 </script>
