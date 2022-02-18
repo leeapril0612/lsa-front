@@ -14,7 +14,7 @@ export default {
     Header
   },
   created () {
-    if (this.$store.state.login) {
+    if (this.$store.state.Auth.login) {
       this.$store.dispatch('getProfile')
         .catch(() => {
           this.$store.dispatch('LOGOUT')
