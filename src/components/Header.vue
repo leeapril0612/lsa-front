@@ -19,7 +19,7 @@ type Data = {
   navItem: string[]
 }
 export default Vue.extend({
-  name: 'header',
+  name: 'Header',
   data: function (): Data {
     return {
       navItem: []
@@ -30,7 +30,7 @@ export default Vue.extend({
       return this.$store.state.login
     },
     payload () {
-      return this.$store.state.profile
+      return this.$store.state.profile || {}
     }
   },
   mounted () {
