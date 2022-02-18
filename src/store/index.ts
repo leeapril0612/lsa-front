@@ -40,7 +40,7 @@ export default new Vuex.Store<State>({
           password
         })
           .then(async (response) => {
-            await this.dispatch('getUserInfo')
+            await this.dispatch('getProfile')
               .then((res) => resolve(res))
               .catch((err) => reject(err))
           })
@@ -50,7 +50,7 @@ export default new Vuex.Store<State>({
     LOGOUT ({ commit }) {
       commit('LOGOUT')
     },
-    getUserInfo ({ commit }) {
+    getProfile ({ commit }) {
       return getProfile()
         .then((res) => {
           commit('setProfile', res.data)
