@@ -1,15 +1,13 @@
 <template>
-  <header v-bind:class="{
-    main: false
-  }">
+  <header>
     <div class="logo">
-      <!-- WeB -->
+      Europium
     </div>
     <div class="nav">
       <router-link to="/" active-class="active" exact>Home</router-link> |
       <router-link to="/about" active-class="active">Board</router-link> |
-      <router-link to="/login" active-class="active">Login</router-link>
-      <!-- <span>Admin 님 환영합니다</span> -->
+      <span v-if="isLogin">{{payload.username}} 님 환영합니다</span>
+      <router-link to="/login" active-class="active" v-else>Login</router-link>
     </div>
   </header>
 </template>
@@ -28,17 +26,15 @@ export default Vue.extend({
     }
   },
   computed: {
-    headerClass: function (): boolean {
-      return !this.$route.meta?.trn
+    isLogin () {
+      return this.$store.state.login
+    },
+    payload () {
+      return this.$store.state.profile
     }
   },
   mounted () {
     console.log(this.$route)
-  },
-  watch: {
-    $route () {
-      console.log(this.$route)
-    }
   }
 })
 </script>
