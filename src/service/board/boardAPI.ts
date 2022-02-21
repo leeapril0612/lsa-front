@@ -26,7 +26,7 @@ export const updateBoard = (id: number, body: any, option?: AxiosRequestConfig) 
 export const getBoard = (id: number) => {
   return new HttpRequest().request({
     url: `/board/${id}`,
-    method: 'get',
+    method: 'get'
   })
 }
 
@@ -45,6 +45,6 @@ export const createBoard = (data: any, option?: AxiosRequestConfig) => {
 export const deleteBoard = (id: number) => {
   return new HttpRequest().request({
     url: `/board/${id}`,
-    method: 'delete',
+    method: 'delete'
   })
 }
