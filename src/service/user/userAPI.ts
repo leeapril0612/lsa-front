@@ -20,6 +20,13 @@ export const login = (body: LoginBody): Promise<ReponseBody> => {
   })
 }
 
+export const logout = (): Promise<ReponseBody> => {
+  return new HttpRequest().request({
+    url: '/user/logout',
+    method: 'get'
+  })
+}
+
 export const getProfile = (): Promise<ReponseBody> => {
   return new HttpRequest().request({
     url: '/user/profile',
