@@ -21,10 +21,13 @@ export class HttpRequest {
     })
 
     this.instance.interceptors.response.use(undefined, (err) => {
-      if (err?.response.status) {
-        if (store.state.Auth.login) {
-          store.dispatch('LOGOUT')
-        }
+      switch (err.response.status) {
+        case 401:
+          if (store.state.Auth.login) {
+            store.dispatch('LOGOUT')
+          }
+          router.push('/login')
+          break
       }
       return Promise.reject(err)
     })
