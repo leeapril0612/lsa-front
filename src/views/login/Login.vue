@@ -30,6 +30,7 @@ export default Vue.extend({
         password: this.password
       })
         .then(() => {
+          alert('로그인 성공')
           this.$router.push('/')
         })
         .catch((err) => {
