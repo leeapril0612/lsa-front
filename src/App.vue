@@ -30,6 +30,8 @@ export default {
     box-sizing: border-box;
     outline: none;
     border: none;
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    text-decoration: none;
   }
   #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
