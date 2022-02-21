@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter, { RouteConfig } from 'vue-router'
 import Home from '../views/Home.vue'
-import store from '../store'
 
 Vue.use(VueRouter)
 
@@ -15,6 +14,16 @@ const routes: Array<RouteConfig> = [
     path: '/board',
     name: 'board',
     component: () => import('../views/board/BoardList.vue')
+  },
+  {
+    path: '/board/create',
+    name: 'boardCreate',
+    component: () => import('../views/board/BoardCreate.vue')
+  },
+  {
+    path: '/board/:id',
+    name: 'boardRead'
+    // component: () => import('../views/board/BoardCreate.vue')
   },
   {
     path: '/login',
