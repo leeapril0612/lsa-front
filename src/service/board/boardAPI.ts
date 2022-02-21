@@ -30,7 +30,7 @@ export const getBoard = (id: number) => {
   })
 }
 
-export const createBoard = (data: any, option?: AxiosRequestConfig) => {
+export const createBoard = (data: BoardBody, option?: AxiosRequestConfig) => {
   return new HttpRequest().request({
     url: '/board',
     method: 'POST',
