@@ -1,6 +1,7 @@
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
-import { getBoards } from '@/service/board/boardAPI'
+import { createBoard, getBoards } from '@/service/board/boardAPI'
 import { RootState } from '..'
+import router from '@/router'
 
 export type BoardState = {
   boards: Board[],
@@ -8,12 +9,15 @@ export type BoardState = {
 
   isLoadingBoards: boolean,
   isLoadingBoard: boolean,
+  isLoadingCreateBoard: boolean,
 
   errorBoards: string | null
   errorBoard: string | null,
+  errorCreateBoard: string | null,
 
   doneBoards: boolean,
   doneBoard: boolean,
+  doneCreateBoard: boolean,
 }
 
 const actions: ActionTree<BoardState, RootState> = {
@@ -32,6 +36,20 @@ const actions: ActionTree<BoardState, RootState> = {
     } finally {
       commit('setIsLoadingBoards', false)
     }
+  },
+  async CREATE_BOARD ({ commit }, payload: BoardBody) {
+    commit('setIsLoadingCreateBoard', true)
+    commit('setDoneCreateBoard', false)
+    commit('setErrorCreateBoard', null)
+    try {
+      await createBoard(payload)
+      commit('setIsLoadingCreateBoard', false)
+      commit('setDoneCreateBoard', true)
+      router.push('/board')
+      return Promise.resolve(true)
+    } catch (error) {
+      return Promise.reject(error)
+    }
   }
 }
 
@@ -48,17 +66,26 @@ const mutations: MutationTree<BoardState> = {
   setIsLoadingBoards (state, isLoading: boolean) {
     state.isLoadingBoards = isLoading
   },
+  setIsLoadingCreateBoard (state, isLoading: boolean) {
+    state.isLoadingCreateBoard = isLoading
+  },
   setErrorBoard (state, errorMsg: string | null) {
     state.errorBoard = errorMsg
   },
   setErrorBoards (state, errorMsg: string | null) {
     state.errorBoards = errorMsg
   },
-  setDoneBoard (state, isDone) {
+  setErrorCreateBoard (state, errorMsg: string | null) {
+    state.errorCreateBoard = errorMsg
+  },
+  setDoneBoard (state, isDone: boolean) {
     state.doneBoard = isDone
   },
-  setDoneBoards (state, isDone) {
+  setDoneBoards (state, isDone: boolean) {
     state.doneBoards = isDone
+  },
+  setDoneCreateBoard (state, isDone: boolean) {
+    state.doneCreateBoard = isDone
   }
 }
 
@@ -75,12 +102,15 @@ const Board: Module<BoardState, RootState> = {
 
     isLoadingBoard: false,
     isLoadingBoards: false,
+    isLoadingCreateBoard: false,
 
     errorBoard: null,
     errorBoards: null,
+    errorCreateBoard: null,
 
     doneBoard: false,
-    doneBoards: false
+    doneBoards: false,
+    doneCreateBoard: false
   },
   mutations,
   actions,

@@ -42,9 +42,6 @@ export default Vue.extend({
       required: true
     }
   },
-  created () {
-    console.log(this.boards)
-  },
   methods: {
     getDay (time: number) {
       return dayjs(time).format('YYYY-MM-DD')
