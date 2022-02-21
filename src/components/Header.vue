@@ -5,7 +5,7 @@
     </div>
     <div class="nav">
       <router-link to="/" active-class="active" exact>Home</router-link> |
-      <router-link to="/about" active-class="active">Board</router-link> |
+      <router-link to="/board" active-class="active">Board</router-link> |
       <span v-if="isLogin">{{payload.username}} 님 환영합니다</span>
       <router-link to="/login" active-class="active" v-else>Login</router-link>
     </div>
