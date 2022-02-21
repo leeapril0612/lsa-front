@@ -7,7 +7,6 @@
 
 <script>
 import Header from '@/components/Header.vue'
-import store from './store'
 
 export default {
   components: {

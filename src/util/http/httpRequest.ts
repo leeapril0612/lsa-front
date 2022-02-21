@@ -1,5 +1,5 @@
 import store from '@/store'
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
 
 declare interface ReponseBody {
   code: number
@@ -22,7 +22,7 @@ export class HttpRequest {
 
     this.instance.interceptors.response.use(undefined, (err) => {
       if (err?.response.status) {
-        if (store.state.login) {
+        if (store.state.Auth.login) {
           store.dispatch('LOGOUT')
         }
       }
