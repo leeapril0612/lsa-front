@@ -8,6 +8,7 @@
       <router-link to="/board" active-class="active">Board</router-link> |
       <span v-if="isLogin">{{payload.username}} 님 환영합니다</span>
       <router-link to="/login" active-class="active" v-else>Login</router-link>
+      <button v-if="isLogin" class="btn" @click="logout">로그아웃</button>
     </div>
   </header>
 </template>
@@ -23,6 +24,17 @@ export default Vue.extend({
   data: function (): Data {
     return {
       navItem: []
+    }
+  },
+  methods: {
+    async logout () {
+      try {
+        this.$store.dispatch('LOGOUT')
+        alert('로그아웃 되었습니다')
+        this.$router.push('/').catch((err) => err)
+      } catch (error) {
+        alert('error')
+      }
     }
   },
   computed: {
