@@ -1,7 +1,7 @@
 <template>
   <header>
     <div class="logo">
-      Europium
+      <router-link to="/">Europium</router-link>
     </div>
     <div class="nav">
       <router-link to="/" active-class="active" exact>Home</router-link> |
@@ -48,7 +48,7 @@ export default Vue.extend({
 })
 </script>
 
-<style>
+<style scoped>
   header {
     position: absolute;
     z-index: 3;
@@ -60,6 +60,12 @@ export default Vue.extend({
     justify-content: space-between;
     line-height: 60px;
     font-size: 14px;
+  }
+  header a {
+    color: #fff;
+  }
+  header a::selection {
+    color: #fff;
   }
   header.main {
     background: #000;
