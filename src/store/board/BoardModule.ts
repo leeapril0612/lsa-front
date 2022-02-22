@@ -61,12 +61,13 @@ const actions: ActionTree<BoardState, RootState> = {
     commit('setErrorCreateBoard', null)
     try {
       await createBoard(payload)
-      commit('setIsLoadingCreateBoard', false)
       commit('setDoneCreateBoard', true)
       router.push('/board')
       return Promise.resolve(true)
     } catch (error) {
       return Promise.reject(error)
+    } finally {
+      commit('setIsLoadingCreateBoard', false)
     }
   },
   async DELETE_BOARD ({ commit }, id) {
@@ -75,12 +76,13 @@ const actions: ActionTree<BoardState, RootState> = {
     commit('setErrorDeleteBoard', null)
     try {
       await deleteBoard(id)
-      commit('setIsLoadingDeleteBoard', false)
       commit('setDoneDeleteBoard', true)
       router.push('/board')
       return Promise.resolve(true)
     } catch (error) {
       return Promise.reject(error)
+    } finally {
+      commit('setIsLoadingDeleteBoard', false)
     }
   }
 }
