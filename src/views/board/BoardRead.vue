@@ -2,7 +2,8 @@
   <div class="wrap">
     <div class="box">
       <div class="glass">
-        <h2>{{$store.state.Board.board.content}}</h2>
+        <h2>{{$store.state.Board.board.content}} <span class="info">{{getDay()}}</span></h2>
+        <p class="info">{{$store.state.Board.board.username}}</p>
         <!-- <label for="title">TITLE</label>
         <input name="title" placeholder="TITLE" readonly v-model="$store.state.Board.board.title"/> -->
         <label for="content">CONTENT</label>
@@ -17,6 +18,7 @@
 </template>
 
 <script lang="ts">
+import dayjs from 'dayjs'
 import Vue from 'vue'
 
 export default Vue.extend({
@@ -40,6 +42,9 @@ export default Vue.extend({
       }
       return state.Board.board.username === state.Auth.profile.username
     },
+    getDay () {
+      return dayjs(this.$store.state.Board.board.createdDate).format('YYYY-MM-DD')
+    },
     async requestAPI () {
       try {
         await this.$store.dispatch('GET_BOARD', this.boardId)
@@ -48,8 +53,13 @@ export default Vue.extend({
         this.$router.push('/board')
       }
     },
-    onClickDelete () {
-      console.log('delete')
+    async onClickDelete () {
+      try {
+        await this.$store.dispatch('DELETE_BOARD', this.boardId)
+        alert('성공')
+      } catch (error) {
+        alert('에러')
+      }
     }
   }
 })
@@ -61,6 +71,13 @@ export default Vue.extend({
   }
    h2{
     color: #fff;
+    text-align: left;
+  }
+  .info {
+    padding-top: 10px;
+    color:#fff;
+    font-weight: 100;
+    font-size: 0.8rem;
     text-align: left;
   }
   .btn-danger {
@@ -88,7 +105,7 @@ export default Vue.extend({
     text-align: left;
     color:#fff;
     display: block;
-    margin-top: 30px;
+    margin-top: 20px;
     font-size: 16px;
     font-weight: 500;
   }

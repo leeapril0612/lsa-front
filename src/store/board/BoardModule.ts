@@ -1,5 +1,5 @@
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
-import { createBoard, getBoard, getBoards } from '@/service/board/boardAPI'
+import { createBoard, deleteBoard, getBoard, getBoards } from '@/service/board/boardAPI'
 import { RootState } from '..'
 import router from '@/router'
 
@@ -10,14 +10,17 @@ export type BoardState = {
   isLoadingBoards: boolean,
   isLoadingBoard: boolean,
   isLoadingCreateBoard: boolean,
+  isLoadingDeleteBoard: boolean,
 
   errorBoards: string | null
   errorBoard: string | null,
   errorCreateBoard: string | null,
+  errorDeleteeBoard: string | null,
 
   doneBoards: boolean,
   doneBoard: boolean,
   doneCreateBoard: boolean,
+  doneDeleteBoard: boolean
 }
 
 const actions: ActionTree<BoardState, RootState> = {
@@ -65,6 +68,20 @@ const actions: ActionTree<BoardState, RootState> = {
     } catch (error) {
       return Promise.reject(error)
     }
+  },
+  async DELETE_BOARD ({ commit }, id) {
+    commit('setIsLoadingDeleteBoard', true)
+    commit('setDoneDeleteBoard', false)
+    commit('setErrorDeleteBoard', null)
+    try {
+      await deleteBoard(id)
+      commit('setIsLoadingDeleteBoard', false)
+      commit('setDoneDeleteBoard', true)
+      router.push('/board')
+      return Promise.resolve(true)
+    } catch (error) {
+      return Promise.reject(error)
+    }
   }
 }
 
@@ -75,6 +92,16 @@ const mutations: MutationTree<BoardState> = {
   setBoard (state, baord: Board) {
     state.board = baord
   },
+  resetBoard (state) {
+    state.board = {
+      id: 0,
+      title: '',
+      createdDate: '',
+      username: '',
+      updatedDate: '',
+      content: ''
+    }
+  },
   setIsLoadingBoard (state, isLoading: boolean) {
     state.isLoadingBoard = isLoading
   },
@@ -84,6 +111,10 @@ const mutations: MutationTree<BoardState> = {
   setIsLoadingCreateBoard (state, isLoading: boolean) {
     state.isLoadingCreateBoard = isLoading
   },
+  setIsLoadingDeleteBoard (state, isLoading: boolean) {
+    state.isLoadingDeleteBoard = isLoading
+  },
+
   setErrorBoard (state, errorMsg: string | null) {
     state.errorBoard = errorMsg
   },
@@ -93,6 +124,10 @@ const mutations: MutationTree<BoardState> = {
   setErrorCreateBoard (state, errorMsg: string | null) {
     state.errorCreateBoard = errorMsg
   },
+  setErrorDeleteBoard (state, errorMsg: string | null) {
+    state.errorDeleteeBoard = errorMsg
+  },
+
   setDoneBoard (state, isDone: boolean) {
     state.doneBoard = isDone
   },
@@ -101,6 +136,9 @@ const mutations: MutationTree<BoardState> = {
   },
   setDoneCreateBoard (state, isDone: boolean) {
     state.doneCreateBoard = isDone
+  },
+  setDoneDeleteBoard (state, isDone: boolean) {
+    state.doneDeleteBoard = isDone
   }
 }
 
@@ -125,14 +163,17 @@ const Board: Module<BoardState, RootState> = {
     isLoadingBoard: false,
     isLoadingBoards: false,
     isLoadingCreateBoard: false,
+    isLoadingDeleteBoard: false,
 
     errorBoard: null,
     errorBoards: null,
     errorCreateBoard: null,
+    errorDeleteeBoard: null,
 
     doneBoard: false,
     doneBoards: false,
-    doneCreateBoard: false
+    doneCreateBoard: false,
+    doneDeleteBoard: false
   },
   mutations,
   actions,
