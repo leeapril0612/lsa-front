@@ -12,13 +12,14 @@ export const getBoards = (option?: AxiosRequestConfig) => {
   })
 }
 
-export const updateBoard = (id: number, body: any, option?: AxiosRequestConfig) => {
+export const updateBoard = (id: number, body: BoardBody, option?: AxiosRequestConfig) => {
   return new HttpRequest().request({
     url: `/board/${id}`,
     method: 'patch',
     headers: {
       'Content-Type': 'application/json;charset=utf-8'
     },
+    data: body,
     ...option
   })
 }

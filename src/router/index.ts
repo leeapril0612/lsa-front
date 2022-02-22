@@ -26,6 +26,11 @@ const routes: Array<RouteConfig> = [
     component: () => import('../views/board/BoardRead.vue')
   },
   {
+    path: '/board/update/:id',
+    name: 'boardUpdate',
+    component: () => import('../views/board/BoardUpdate.vue')
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import('../views/login/Login.vue')

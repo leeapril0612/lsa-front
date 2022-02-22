@@ -1,5 +1,5 @@
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
-import { createBoard, deleteBoard, getBoard, getBoards } from '@/service/board/boardAPI'
+import { createBoard, deleteBoard, getBoard, getBoards, updateBoard } from '@/service/board/boardAPI'
 import { RootState } from '..'
 import router from '@/router'
 
@@ -11,16 +11,19 @@ export type BoardState = {
   isLoadingBoard: boolean,
   isLoadingCreateBoard: boolean,
   isLoadingDeleteBoard: boolean,
+  isLoadingUpdateBoard: boolean,
 
   errorBoards: string | null
   errorBoard: string | null,
   errorCreateBoard: string | null,
-  errorDeleteeBoard: string | null,
+  errorDeleteBoard: string | null,
+  errorUpdateBoard: string | null,
 
   doneBoards: boolean,
   doneBoard: boolean,
   doneCreateBoard: boolean,
-  doneDeleteBoard: boolean
+  doneDeleteBoard: boolean,
+  doneUpdateBoard: boolean
 }
 
 const actions: ActionTree<BoardState, RootState> = {
@@ -84,6 +87,23 @@ const actions: ActionTree<BoardState, RootState> = {
     } finally {
       commit('setIsLoadingDeleteBoard', false)
     }
+  },
+  async UPDATE_BOARD ({ commit }, payload: BoardBody&{
+    id: number
+  }) {
+    commit('setIsLoadingUpdateBoard', true)
+    commit('setDoneUpdateBoard', false)
+    commit('setErrorUpdateBoard', null)
+    try {
+      await updateBoard(payload.id, payload)
+      commit('setDoneUpdateBoard', true)
+      router.push('/board')
+      return Promise.resolve(true)
+    } catch (error) {
+      return Promise.reject(error)
+    } finally {
+      commit('setIsLoadingUpdateBoard', false)
+    }
   }
 }
 
@@ -116,6 +136,9 @@ const mutations: MutationTree<BoardState> = {
   setIsLoadingDeleteBoard (state, isLoading: boolean) {
     state.isLoadingDeleteBoard = isLoading
   },
+  setIsLoadingUpdateBoard (state, isLoading: boolean) {
+    state.isLoadingUpdateBoard = isLoading
+  },
 
   setErrorBoard (state, errorMsg: string | null) {
     state.errorBoard = errorMsg
@@ -127,7 +150,10 @@ const mutations: MutationTree<BoardState> = {
     state.errorCreateBoard = errorMsg
   },
   setErrorDeleteBoard (state, errorMsg: string | null) {
-    state.errorDeleteeBoard = errorMsg
+    state.errorDeleteBoard = errorMsg
+  },
+  setErrorUpdateBoard (state, errorMsg: string | null) {
+    state.errorUpdateBoard = errorMsg
   },
 
   setDoneBoard (state, isDone: boolean) {
@@ -141,6 +167,9 @@ const mutations: MutationTree<BoardState> = {
   },
   setDoneDeleteBoard (state, isDone: boolean) {
     state.doneDeleteBoard = isDone
+  },
+  setDoneUpdateBoard (state, isDone: boolean) {
+    state.doneUpdateBoard = isDone
   }
 }
 
@@ -166,16 +195,19 @@ const Board: Module<BoardState, RootState> = {
     isLoadingBoards: false,
     isLoadingCreateBoard: false,
     isLoadingDeleteBoard: false,
+    isLoadingUpdateBoard: false,
 
     errorBoard: null,
     errorBoards: null,
     errorCreateBoard: null,
-    errorDeleteeBoard: null,
+    errorDeleteBoard: null,
+    errorUpdateBoard: null,
 
     doneBoard: false,
     doneBoards: false,
     doneCreateBoard: false,
-    doneDeleteBoard: false
+    doneDeleteBoard: false,
+    doneUpdateBoard: false
   },
   mutations,
   actions,
