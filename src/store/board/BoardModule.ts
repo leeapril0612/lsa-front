@@ -1,11 +1,11 @@
 import { Module, MutationTree, ActionTree, GetterTree } from 'vuex'
-import { createBoard, getBoards } from '@/service/board/boardAPI'
+import { createBoard, getBoard, getBoards } from '@/service/board/boardAPI'
 import { RootState } from '..'
 import router from '@/router'
 
 export type BoardState = {
   boards: Board[],
-  board: Board | null,
+  board: Board,
 
   isLoadingBoards: boolean,
   isLoadingBoard: boolean,
@@ -24,7 +24,7 @@ const actions: ActionTree<BoardState, RootState> = {
   async GET_BOARDS ({ commit }) {
     commit('setIsLoadingBoards', true)
     commit('setDoneBoards', false)
-    commit('setErrorBoard', null)
+    commit('setErrorBoards', null)
     const boards = this.state.Board.boards
     try {
       const { data } = await getBoards()
@@ -35,6 +35,21 @@ const actions: ActionTree<BoardState, RootState> = {
       return Promise.reject(error)
     } finally {
       commit('setIsLoadingBoards', false)
+    }
+  },
+  async GET_BOARD ({ commit }, boardId) {
+    commit('setIsLoadingBoard', true)
+    commit('setDoneBoard', false)
+    commit('setErrorBoard', null)
+    try {
+      const { data } = await getBoard(boardId)
+      commit('setBoard', data)
+      return Promise.resolve(true)
+    } catch (error) {
+      commit('setErrorBoard', error)
+      return Promise.reject(error)
+    } finally {
+      commit('setIsLoadingBoard', false)
     }
   },
   async CREATE_BOARD ({ commit }, payload: BoardBody) {
@@ -97,7 +112,14 @@ const getters: GetterTree<BoardState, RootState> = {
 const Board: Module<BoardState, RootState> = {
   // namespaced: true, // <- false일 경우, getters, mutations, actions의 이름을 공용으로 사용
   state: {
-    board: null,
+    board: {
+      id: 0,
+      title: '',
+      createdDate: '',
+      username: '',
+      updatedDate: '',
+      content: ''
+    },
     boards: [],
 
     isLoadingBoard: false,

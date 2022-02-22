@@ -22,8 +22,8 @@ const routes: Array<RouteConfig> = [
   },
   {
     path: '/board/:id',
-    name: 'boardRead'
-    // component: () => import('../views/board/BoardCreate.vue')
+    name: 'boardRead',
+    component: () => import('../views/board/BoardRead.vue')
   },
   {
     path: '/login',
