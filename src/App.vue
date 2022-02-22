@@ -61,6 +61,7 @@ export default {
     padding: 15px;
   }
   .btn {
+    font-size: 0.9rem;
     cursor: pointer;
     color: #fff;
     background: none;

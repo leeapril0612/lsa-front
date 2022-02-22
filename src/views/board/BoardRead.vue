@@ -1,6 +1,6 @@
 <template>
   <div class="wrap">
-    <div class="box">
+    <div class="box" v-if="!$store.state.Board.isLoadingBoard">
       <div class="glass">
         <h2>{{$store.state.Board.board.content}} <span class="info">{{getDay()}}</span></h2>
         <p class="info">{{$store.state.Board.board.username}}</p>
@@ -10,8 +10,20 @@
         <textarea name="content" rows="10" placeholder="CONTENT" readonly v-model="$store.state.Board.board.content"/>
       </div>
       <div class="table-tool">
+        <router-link
+          v-if="thisUser()"
+          :to="{
+            name: 'boardUpdate',
+            params: {
+              id: boardId
+            }
+          }"
+          class="btn btn-danger"
+        >
+          Modify
+        </router-link>
         <button class="btn btn-danger" to="/" v-if="thisUser()" @click="onClickDelete">Delete</button>
-        <router-link to="/board" class="btn">cacel</router-link>
+        <router-link to="/board" class="btn">List</router-link>
       </div>
     </div>
   </div>
@@ -91,8 +103,8 @@ export default Vue.extend({
   .box {
     width: 60%;
   }
-  .btn:nth-child(1){
-    margin-right: 10px;
+  .btn{
+    margin-left: 10px;
   }
   .table-tool {
     padding: 10px;
