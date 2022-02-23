@@ -12,8 +12,8 @@ export class HttpRequest {
 
   constructor (option?: AxiosRequestConfig) {
     this.instance = axios.create({
-      // baseURL: 'http://dev-sys.openobject.net:25000/',
-      baseURL: 'http://localhost:3080/',
+      baseURL: 'https://dev-sys.openobject.net:25000/',
+      // baseURL: 'http://localhost:3080/',
       headers: {
         // 'Access-Control-Allow-Origin:': '*'
       },
