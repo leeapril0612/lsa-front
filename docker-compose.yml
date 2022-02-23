@@ -1,0 +1,19 @@
+version: '3.2'
+
+services:
+  lsa-front:
+    container_name: lsa_front
+    image: nginx:alpine
+    ports:
+    - "25001:8080"
+    - "443:443"
+    volumes:
+      - ./dist:/usr/share/nginx/html
+      - ./.nginx:/etc/nginx/conf.d
+      - ./cert:/etc/ssl/
+    networks:
+      - elk
+
+networks:
+  elk:
+    driver: bridge
