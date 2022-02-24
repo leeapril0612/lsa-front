@@ -6,7 +6,7 @@ services:
     image: nginx:alpine
     ports:
     - "25001:8080"
-    - "443:443"
+    - "25002:443"
     volumes:
       - ./dist:/usr/share/nginx/html
       - ./.nginx:/etc/nginx/conf.d
