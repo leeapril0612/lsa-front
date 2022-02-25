@@ -5,7 +5,7 @@ services:
     container_name: lsa_front
     image: nginx:alpine
     ports:
-    - "25001:8080"
+    - "25001:80"
     - "25002:443"
     volumes:
       - ./dist:/usr/share/nginx/html
